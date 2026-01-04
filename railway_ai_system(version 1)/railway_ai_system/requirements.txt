@@ -1,0 +1,20 @@
+# ===============================
+# PROJECT DEPENDENCIES
+# ===============================
+# Ye file batati hai ki project ko
+# kaun‑kaun se Python packages chahiye.
+
+streamlit
+# UI aur dashboard banane ke liye
+
+numpy
+# Numerical calculations (vibration RMS, peaks)
+
+pandas
+# CSV data handling (sensor data)
+
+opencv-python
+# Image / video processing (CCTV & drone feeds)
+
+requests
+# External APIs ke liye (future weather / services)
