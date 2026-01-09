@@ -4,3 +4,5 @@ st.sidebar.header('Controls')
 st.write('Monitoring dashboard loading...')
 def process_media():
     pass
+def connect_backend():
+    pass
