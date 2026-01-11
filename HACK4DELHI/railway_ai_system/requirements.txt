@@ -17,4 +17,6 @@ opencv-python
 # Image / video processing (CCTV & drone feeds)
 
 requests
+scipy
+
 # External APIs ke liye (future weather / services)
