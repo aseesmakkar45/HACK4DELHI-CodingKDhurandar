@@ -1,131 +1,148 @@
-import numpy as np
-import tempfile
 import os
 import pickle
+import tempfile
+import numpy as np
 from PIL import Image
 
 # =========================
-# MODEL LOADING
+# INTERNAL CACHED STATE
 # =========================
 
-MODEL_PATH = 'HACK4DELHI/my_image_classifier.pkl'
+_MODEL = None
+_LABEL_NAMES = None
+_IMG_SIZE = None
+_MODEL_LOADED = False
 
-if not os.path.exists(MODEL_PATH):
-    raise FileNotFoundError(f"❌ Model not found at: {MODEL_PATH}")
 
-print("🔄 Loading ML model...")
+# =========================
+# SAFE MODEL LOADER
+# =========================
 
-def load_model_safe(path):
+def _load_model_once():
+    """
+    Loads the CCTV ML model only once.
+    Never raises import-time errors.
+    """
+
+    global _MODEL, _LABEL_NAMES, _IMG_SIZE, _MODEL_LOADED
+
+    if _MODEL_LOADED:
+        return _MODEL, _LABEL_NAMES, _IMG_SIZE
+
+    # Path relative to project root
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    MODEL_PATH = os.path.join(BASE_DIR, "my_image_classifier.pkl")
+
+    if not os.path.exists(MODEL_PATH):
+        print("⚠️ CCTV ML model not found → running in fallback mode")
+        _MODEL_LOADED = True
+        return None, None, None
+
     try:
-        with open(path, "rb") as f:
-            return pickle.load(f)
+        with open(MODEL_PATH, "rb") as f:
+            model_data = pickle.load(f)
+
+        _MODEL = model_data["model"]
+        _LABEL_NAMES = model_data["label_names"]
+        _IMG_SIZE = model_data["img_size"]
+
+        print("✅ CCTV ML model loaded successfully")
+        print("📊 Classes:", list(_LABEL_NAMES.values()))
+        print("🖼️ Image size:", _IMG_SIZE)
+
     except Exception as e:
-        print(f"❌ Could not load model: {e}")
-        return None
+        print(f"❌ Failed to load CCTV ML model: {e}")
+        _MODEL = _LABEL_NAMES = _IMG_SIZE = None
 
-# 🔑 FIX: model_data is now properly loaded
-model_data = load_model_safe(MODEL_PATH)
+    _MODEL_LOADED = True
+    return _MODEL, _LABEL_NAMES, _IMG_SIZE
 
-if model_data is None:
-    raise RuntimeError("❌ Model loading failed!")
-
-# Extract components (UNCHANGED LOGIC)
-model = model_data["model"]
-label_names = model_data["label_names"]   # dict: {0: class_name, ...}
-img_size = model_data["img_size"]         # (64, 64)
-
-print("✅ Model loaded successfully!")
-print(f"📊 Trained classes: {list(label_names.values())}")
-print(f"🖼️  Image size: {img_size}")
 
 # =========================
 # FEATURE EXTRACTION
 # =========================
 
-def extract_features(image_path):
-    """Extract features from image exactly like training"""
+def _extract_features(image_path, img_size):
     img = Image.open(image_path)
 
     if img.mode != "RGB":
         img = img.convert("RGB")
 
     img = img.resize(img_size)
-    img_array = np.array(img).flatten() / 255.0
+    arr = np.array(img).flatten() / 255.0
+    return arr.reshape(1, -1)
 
-    return img_array.reshape(1, -1)
 
 # =========================
-# MAIN ANALYSIS LOGIC
+# PUBLIC API (USED BY app.py)
 # =========================
 
 def analyze_visual(media_file):
+    """
+    Analyzes CCTV image.
+    Returns:
+      - normal
+      - suspicious(human detected)
+      - tampering(object detected)
+      - tampering(broken track)
+      - no_feed
+    """
 
     if media_file is None:
         return "no_feed"
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp:
-        temp.write(media_file.read())
-        image_path = temp.name
+    model, label_names, img_size = _load_model_once()
+
+    # ---------- FALLBACK MODE ----------
+    if model is None:
+        return "normal"
+
+    # Save uploaded image temporarily
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
+        tmp.write(media_file.read())
+        image_path = tmp.name
 
     try:
-        features = extract_features(image_path)
-        prediction_idx = model.predict(features)[0]
-        probabilities = model.predict_proba(features)[0]
+        features = _extract_features(image_path, img_size)
 
-        predicted_class = label_names[prediction_idx]
-        confidence = probabilities[prediction_idx] * 100
+        pred_idx = model.predict(features)[0]
+        probs = model.predict_proba(features)[0]
 
-        print(f"🔍 Prediction: {predicted_class} (Confidence: {confidence:.1f}%)")
+        predicted_class = label_names[pred_idx].lower()
+        confidence = probs[pred_idx] * 100
+
+        print(f"🔍 CCTV Prediction: {predicted_class} ({confidence:.1f}%)")
 
     except Exception as e:
-        print(f"❌ CCTV ML error: {e}")
+        print(f"❌ CCTV inference error: {e}")
         os.remove(image_path)
         return "normal"
 
     os.remove(image_path)
 
-    label = predicted_class.lower()
-
-    if label == "normal_track":
+    # ---------- LABEL MAPPING (UNCHANGED LOGIC) ----------
+    if predicted_class == "normal_track":
         return "normal"
 
-    elif label == "human_on_track":
+    if predicted_class == "human_on_track":
         return "suspicious(human detected)"
 
-    elif label == "object_on_track":
+    if predicted_class == "object_on_track":
         return "tampering(object detected)"
 
-    elif label == "broken_track":
+    if predicted_class == "broken_track":
         return "tampering(broken track)"
 
-    elif "normal" in label:
+    # Fallback keyword matching
+    if "normal" in predicted_class:
         return "normal"
-    elif "human" in label:
+    if "human" in predicted_class:
         return "suspicious(human detected)"
-    elif "object" in label:
+    if "object" in predicted_class:
         return "tampering(object detected)"
-    elif "broken" in label:
+    if "broken" in predicted_class:
         return "tampering(broken track)"
 
-    else:
-        print(f"⚠️  Unexpected class '{predicted_class}' - defaulting to normal")
-        print("   Expected classes: Broken_track, human_on_track, normal_track, object_on_track")
-        return "normal"
-
-# =========================
-# MODEL DIAGNOSTICS
-# =========================
-
-def test_model():
-    """Test what classes your model actually outputs"""
-    print("\n" + "=" * 60)
-    print("🧪 MODEL DIAGNOSIS")
-    print("=" * 60)
-    print(f"Model path: {MODEL_PATH}")
-    print(f"Trained classes: {label_names}")
-    print(f"Number of classes: {len(label_names)}")
-    print("=" * 60 + "\n")
-
-# Streamlit-safe (no __main__ dependency)
-test_model()
+    print(f"⚠️ Unknown CCTV class '{predicted_class}' → defaulting to normal")
+    return "normal"
 
