@@ -370,7 +370,7 @@ if not st.session_state.logged_in:
 
     st.stop()
 
-from backend.vibration import analyze_vibration
+from HACK4DELHI/railway_ai_system/backend/vibration.py import analyze_vibration
 from backend.cctv import analyze_visual
 from backend.drone import analyze_drone_image
 from backend.sound import analyze_sound
@@ -1056,6 +1056,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
