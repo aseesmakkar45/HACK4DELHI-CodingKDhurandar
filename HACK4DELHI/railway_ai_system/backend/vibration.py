@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 # Use relative path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(SCRIPT_DIR, 'ml_models', 'vibration_classifier.pkl')
+MODEL_PATH = os.path.join(SCRIPT_DIR, 'vibration_classifier.pkl')
 
 CONFIDENCE_THRESHOLD = 0.6  # Require 60% confidence for "abnormal"
 EXPECTED_SAMPLE_RATE = 100  # Hz
@@ -262,4 +262,5 @@ def analyze_vibration(vibration_df):
         try:
             return analyze_vibration_rule_based(vibration_df)
         except:
+
             return "invalid_format"
