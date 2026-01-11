@@ -372,15 +372,16 @@ if not st.session_state.logged_in:
 
     st.stop()
 
-from backend.vibration import analyze_vibration
-from backend.cctv import analyze_visual
-from backend.drone import analyze_drone_image
-from backend.sound import analyze_sound
-from backend.train_schedule import get_train_status, get_direction
-from backend.maintenance_db import is_repair_ongoing
-from backend.control_room import send_control_room_alert, buzzer_alert
-from backend.train_control import send_train_stop_command
-from backend.weather import get_zone_weather
+from railway_ai_system.backend.cctv import analyze_visual
+from railway_ai_system.backend.vibration import analyze_vibration
+from railway_ai_system.backend.drone import analyze_drone_image
+from railway_ai_system.backend.sound import analyze_sound
+from railway_ai_system.backend.train_schedule import get_train_status, get_direction
+from railway_ai_system.backend.maintenance_db import is_repair_ongoing
+from railway_ai_system.backend.control_room import send_control_room_alert, buzzer_alert
+from railway_ai_system.backend.train_control import send_train_stop_command
+from railway_ai_system.backend.weather import get_zone_weather, fetch_weather_by_coordinates
+
 
 import random
 import datetime
@@ -1058,6 +1059,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
