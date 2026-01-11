@@ -6,8 +6,9 @@ import os
 import pickle
 from PIL import Image
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(SCRIPT_DIR, 'my_2class_model.pkl')
 
-MODEL_PATH = "HACK4DELHI/my_2class_model.pkl"
 
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError("❌ my_2class_model.pkl not found in ml/ folder")
@@ -70,4 +71,5 @@ def analyze_drone_image(media_file):
 
     
     return "anomaly"
+
 
