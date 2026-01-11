@@ -1071,3 +1071,4 @@ with tab_health:
             st.error(
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
             )
+# Layout finalized
