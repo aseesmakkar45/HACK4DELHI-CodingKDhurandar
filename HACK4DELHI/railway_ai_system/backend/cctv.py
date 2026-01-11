@@ -14,7 +14,14 @@ if not os.path.exists(MODEL_PATH):
 
 print("🔄 Loading ML model...")
 with open(MODEL_PATH, "rb") as f:
-    model_data = pickle.load(f)
+    def load_model_safe(path):
+    try:
+        with open(path, "rb") as f:
+            return pickle.load(f)
+    except Exception as e:
+        print(f"Could not load model: {e}")
+        return None
+
 
 model = model_data["model"]
 label_names = model_data["label_names"]   # dict: {0: class_name, ...}
@@ -119,6 +126,7 @@ def test_model():
 if __name__ == "__main__":
 
     test_model()
+
 
 
 
