@@ -6,7 +6,7 @@ import pickle
 from PIL import Image
 
 
-MODEL_PATH = r"C:\Users\HP\Desktop\HACK4DELHI\my_image_classifier.pkl"
+MODEL_PATH = r"HACK4DELHI/my_image_classifier.pkl"
 
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"❌ Model not found at: {MODEL_PATH}")
@@ -116,4 +116,5 @@ def test_model():
     print("="*60 + "\n")
 
 if __name__ == "__main__":
+
     test_model()
