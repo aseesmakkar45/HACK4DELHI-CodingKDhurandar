@@ -29,14 +29,14 @@ def _load_model_once():
     if _MODEL_LOADED:
         return _MODEL, _LABEL_NAMES, _IMG_SIZE
 
-   PROJECT_ROOT = os.path.dirname(
+    PROJECT_ROOT = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 )
-MODEL_PATH = os.path.join(PROJECT_ROOT, "my_image_classifier.pkl")
+    MODEL_PATH = os.path.join(PROJECT_ROOT, "my_image_classifier.pkl")
 
-# 🔍 DEBUG (ADD THESE TWO LINES)
-print("DEBUG | CCTV model path:", MODEL_PATH)
-print("DEBUG | Exists:", os.path.exists(MODEL_PATH))
+    # 🔍 DEBUG (ADD THESE TWO LINES)
+    print("DEBUG | CCTV model path:", MODEL_PATH)
+    print("DEBUG | Exists:", os.path.exists(MODEL_PATH))
 
     if not os.path.exists(MODEL_PATH):
         print("⚠️ Drone ML model not found → running in fallback mode")
@@ -125,4 +125,5 @@ def analyze_drone_image(media_file):
         return "normal"
 
     return "anomaly"
+
 
