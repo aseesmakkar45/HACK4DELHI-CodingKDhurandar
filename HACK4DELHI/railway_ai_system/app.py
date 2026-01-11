@@ -164,7 +164,7 @@ if not st.session_state.logged_in:
     
     with home_tab:
         st.image(
-        "images/banner.png",
+        "HACK4DELHI/railway_ai_system/images/banner.png",
         use_container_width=True
     )
 
@@ -1054,4 +1054,5 @@ with tab_health:
         else:
             st.error(
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
+
             )
