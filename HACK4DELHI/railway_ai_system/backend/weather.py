@@ -1,0 +1,75 @@
+import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+API_KEY = os.getenv("OPENWEATHER_API_KEY")
+
+
+def fetch_weather_by_coordinates(lat, lon):
+    
+    
+    
+    if not API_KEY:
+        return {
+            "temperature_c": 25,
+            "humidity_percent": 60,
+            "wind_speed_mps": 3.5,
+            "condition": "Clear",
+            "description": "clear sky",
+            "rain_mm_last_1h": 0,
+        }
+    
+    try:
+        
+        url = (
+            "https://api.weatherapi.com/v1/current.json"
+            f"?key={API_KEY}&q={lat},{lon}&aqi=no"
+        )
+
+        response = requests.get(url, timeout=5)
+        
+        
+        if response.status_code != 200:
+            raise Exception(f"API returned status {response.status_code}")
+        
+        data = response.json()
+
+        
+        return {
+            "temperature_c": data["current"]["temp_c"],
+            "humidity_percent": data["current"]["humidity"],
+            "wind_speed_mps": data["current"]["wind_kph"] / 3.6,  # Convert kph to m/s
+            "condition": data["current"]["condition"]["text"],
+            "description": data["current"]["condition"]["text"].lower(),
+            "rain_mm_last_1h": data["current"].get("precip_mm", 0),
+        }
+
+    except Exception as e:
+        print(f"⚠️ Weather API Error: {e}")
+        
+        return {
+            "temperature_c": 25,
+            "humidity_percent": 60,
+            "wind_speed_mps": 3.5,
+            "condition": "unavailable",
+            "description": "weather data not available",
+            "rain_mm_last_1h": 0,
+        }
+
+
+def get_zone_weather(zone_sensors):
+    
+    zone_weather = {}
+
+    for sensor_id, sensor in zone_sensors.items():
+        weather = fetch_weather_by_coordinates(
+            sensor["lat"],
+            sensor["lon"]
+        )
+
+        zone_weather[sensor_id] = {
+            "location": sensor["name"],
+            "weather": weather
+        }
+    return zone_weather
