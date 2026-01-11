@@ -294,7 +294,7 @@ if not st.session_state.logged_in:
 
         with col_center:
             st.image(
-                "images/delhi.png",
+                "HACK4DELHI/railway_ai_system/images/delhi.png",
                 use_container_width=True
             )
 
@@ -1056,5 +1056,6 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
