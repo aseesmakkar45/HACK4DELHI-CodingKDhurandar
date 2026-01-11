@@ -373,7 +373,7 @@ if not st.session_state.logged_in:
 
     st.stop()
 
-from railway_ai_system.backend.cctv import analyze_visual
+from backend.cctv import analyze_visual
 from railway_ai_system.backend.vibration import analyze_vibration
 from railway_ai_system.backend.drone import analyze_drone_image
 from railway_ai_system.backend.sound import analyze_sound
@@ -1060,6 +1060,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
