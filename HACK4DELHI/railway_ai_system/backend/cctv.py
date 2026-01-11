@@ -5,8 +5,8 @@ import os
 import pickle
 from PIL import Image
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(SCRIPT_DIR, 'my_image_classifier.pkl')
+
+MODEL_PATH = '
 
 
 if not os.path.exists(MODEL_PATH):
@@ -119,4 +119,5 @@ def test_model():
 if __name__ == "__main__":
 
     test_model()
+
 
