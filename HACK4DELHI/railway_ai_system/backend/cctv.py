@@ -30,8 +30,10 @@ def _load_model_once():
         return _MODEL, _LABEL_NAMES, _IMG_SIZE
 
     # Path relative to project root
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    MODEL_PATH = os.path.join(BASE_DIR, "my_image_classifier.pkl")
+   PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+MODEL_PATH = os.path.join(PROJECT_ROOT, "my_image_classifier.pkl")
+print("DEBUG | CCTV model path:", MODEL_PATH)
+print("DEBUG | Exists:", os.path.exists(MODEL_PATH))
 
     if not os.path.exists(MODEL_PATH):
         print("⚠️ CCTV ML model not found → running in fallback mode")
@@ -145,4 +147,5 @@ def analyze_visual(media_file):
 
     print(f"⚠️ Unknown CCTV class '{predicted_class}' → defaulting to normal")
     return "normal"
+
 
