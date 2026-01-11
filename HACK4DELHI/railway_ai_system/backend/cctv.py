@@ -30,17 +30,15 @@ def _load_model_once():
     if _MODEL_LOADED:
         return _MODEL, _LABEL_NAMES, _IMG_SIZE
 
-    # Path relative to project root
-        # ✅ Path relative to railway_ai_system/
-      SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-      MODEL_PATH = os.path.abspath(
-       os.path.join(SCRIPT_DIR, "..", "my_image_classifier.pkl")
-)
+    # ✅ Correct path: railway_ai_system/my_image_classifier.pkl
+    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+    MODEL_PATH = os.path.abspath(
+        os.path.join(SCRIPT_DIR, "..", "my_image_classifier.pkl")
+    )
 
-      print("🔥🔥🔥 CCTV MODULE LOADED FROM:", __file__)
-      print("📍 CCTV model path:", MODEL_PATH)
-      print("📦 Exists:", os.path.exists(MODEL_PATH))
-
+    print("🔥🔥🔥 CCTV MODULE LOADED FROM:", __file__)
+    print("📍 CCTV model path:", MODEL_PATH)
+    print("📦 Exists:", os.path.exists(MODEL_PATH))
 
     if not os.path.exists(MODEL_PATH):
         print("⚠️ CCTV ML model not found → running in fallback mode")
@@ -65,7 +63,6 @@ def _load_model_once():
 
     _MODEL_LOADED = True
     return _MODEL, _LABEL_NAMES, _IMG_SIZE
-
 
 # =========================
 # FEATURE EXTRACTION
