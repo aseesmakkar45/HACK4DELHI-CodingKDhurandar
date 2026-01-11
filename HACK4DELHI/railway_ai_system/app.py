@@ -4,6 +4,11 @@ import streamlit as st
 import pandas as pd
 from pandas.errors import EmptyDataError
 import datetime
+# =========================
+# PATH SETUP (FIXED)
+# =========================
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+IMAGE_DIR = os.path.join(APP_DIR, "images")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
@@ -166,10 +171,7 @@ if not st.session_state.logged_in:
 )
     
     with home_tab:
-        st.image(
-        "HACK4DELHI/railway_ai_system/images/banner.png",
-        use_container_width=True
-    )
+        show_image("banner.png", use_container_width=True)
 
         st.markdown("""
         <style>
@@ -209,11 +211,8 @@ if not st.session_state.logged_in:
         col_img, col_text = st.columns([1, 2])
 
         with col_img:
-            st.image(
-                "HACK4DELHI/railway_ai_system/images/collage.png",
-                use_container_width=True
-            )
-
+            show_image("collage.png", use_container_width=True)
+            
         with col_text:
             st.markdown("""
             Large‑scale railway infrastructure remains vulnerable to organized and repeated
@@ -263,10 +262,7 @@ if not st.session_state.logged_in:
             """)
         
         with col_img:
-            st.image(
-                "HACK4DELHI/railway_ai_system/images/controlroom.png",
-                use_container_width=True
-            )
+           show_image("controlroom.png", use_container_width=True)
 
 
         st.markdown("---")
@@ -296,11 +292,7 @@ if not st.session_state.logged_in:
         col_left, col_center, col_right = st.columns([1, 2, 1])
 
         with col_center:
-            st.image(
-                "HACK4DELHI/railway_ai_system/images/delhi.png",
-                use_container_width=True
-            )
-
+            show_image("delhi.png", use_container_width=True)
         st.markdown("---")
 
         st.success(
@@ -1060,6 +1052,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
