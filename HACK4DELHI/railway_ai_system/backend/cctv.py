@@ -1,3 +1,4 @@
+print("🔥🔥🔥 CCTV MODULE LOADED FROM:", __file__)
 import os
 import pickle
 import tempfile
@@ -139,6 +140,7 @@ def analyze_visual(media_file):
 
     print(f"⚠️ Unknown CCTV class '{predicted_class}' → defaulting to normal")
     return "normal"
+
 
 
 
