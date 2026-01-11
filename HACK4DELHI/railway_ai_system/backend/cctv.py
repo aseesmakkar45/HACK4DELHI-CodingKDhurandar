@@ -80,24 +80,16 @@ def _extract_features(image_path, img_size):
 # =========================
 
 def analyze_visual(media_file):
-    """
-    Analyzes CCTV image.
-    Returns:
-      - normal
-      - suspicious(human detected)
-      - tampering(object detected)
-      - tampering(broken track)
-      - no_feed
-    """
+
+    # 🔑 Always attempt model load once
+    model, label_names, img_size = _load_model_once()
 
     if media_file is None:
         return "no_feed"
 
-    model, label_names, img_size = _load_model_once()
-
-    # ---------- FALLBACK MODE ----------
     if model is None:
         return "normal"
+
 
     # Save uploaded image temporarily
     with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
