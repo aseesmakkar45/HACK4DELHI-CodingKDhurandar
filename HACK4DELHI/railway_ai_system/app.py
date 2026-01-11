@@ -13,6 +13,17 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
+# =========================
+# SAFE IMAGE LOADER
+# =========================
+def show_image(filename, **kwargs):
+    img_path = os.path.join(IMAGE_DIR, filename)
+    if os.path.exists(img_path):
+        st.image(img_path, **kwargs)
+    else:
+        st.warning(f"⚠️ Image not found: {filename}")
+
+
 
 ZONES_CONFIG = {
     "North Delhi": {
@@ -1052,6 +1063,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
