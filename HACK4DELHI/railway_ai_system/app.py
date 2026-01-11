@@ -4,8 +4,9 @@ import streamlit as st
 import pandas as pd
 from pandas.errors import EmptyDataError
 import datetime
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
 
 
 ZONES_CONFIG = {
@@ -1059,6 +1060,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
