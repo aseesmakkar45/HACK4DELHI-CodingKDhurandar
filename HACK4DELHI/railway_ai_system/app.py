@@ -376,6 +376,8 @@ if not st.session_state.logged_in:
 
     st.stop()
 
+
+
 from railway_ai_system.backend.cctv import analyze_visual
 from railway_ai_system.backend.vibration import analyze_vibration
 from railway_ai_system.backend.drone import analyze_drone_image
@@ -389,6 +391,24 @@ from railway_ai_system.backend.weather import get_zone_weather, fetch_weather_by
 
 import random
 import datetime
+# =========================
+# 🚨 HARD CCTV MODEL STATUS WARNING
+# =========================
+
+if not is_model_loaded():
+    st.error(
+        "🚨 **CCTV AI MODEL NOT LOADED**\n\n"
+        "- CCTV predictions are running in **FALLBACK MODE**\n"
+        "- All outputs will default to **NORMAL**\n"
+        "- 🚫 NO AI inference is happening\n\n"
+        "**Fix Required:**\n"
+        "- Ensure `my_image_classifier.pkl` exists\n"
+        "- Ensure correct model path\n"
+        "- Check deployment logs\n",
+        icon="🚨"
+    )
+else:
+    st.success("✅ CCTV AI model loaded successfully", icon="🤖")
 
 
 
@@ -1063,6 +1083,7 @@ with tab_health:
                 f"🔴 {component} OFFLINE | Last update: {info['last_update']}"
 
             )
+
 
 
 
