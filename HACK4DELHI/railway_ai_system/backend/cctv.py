@@ -144,6 +144,13 @@ def analyze_visual(media_file):
     print(f"⚠️ Unknown CCTV class '{predicted_class}' → defaulting to normal")
     return "normal"
 
+def is_model_loaded():
+    """
+    Returns True if CCTV ML model loaded successfully.
+    """
+    global _MODEL_LOADED, _MODEL
+    return _MODEL_LOADED and _MODEL is not None
+
 
 
 
