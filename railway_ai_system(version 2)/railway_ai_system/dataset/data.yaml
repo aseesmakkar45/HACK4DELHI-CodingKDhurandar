@@ -1,0 +1,15 @@
+nc: 5
+names:
+  0: tamper_action       # A person actively damaging/removing track hardware
+  1: person_passing      # A person simply walking across/near the track
+  2: maintenance_worker  # A worker in PPE during scheduled maintenance
+  3: animal              # Any animal on or near the track
+  4: tool_on_track       # A tool in contact with track hardware (bolt cutter, grinder, crowbar)
+
+path: .
+train: images/train
+val: images/val
+
+# Augmentation note:
+# tamper_action is the safety-critical class — do NOT undersample it.
+# Use class weights in training if dataset is imbalanced.
