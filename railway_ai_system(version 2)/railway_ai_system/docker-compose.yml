@@ -1,0 +1,56 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# RailDrishti AI — docker-compose.yml
+# Brings up both the Edge Node and Central Server together
+# Usage:
+#   docker-compose up                  # Run in demo mode
+#   docker-compose --env-file .env up  # Run with real API keys
+# ──────────────────────────────────────────────────────────────────────────────
+version: "3.9"
+
+services:
+
+  # ── Edge AI Node (per station) ──────────────────────────────────────────────
+  raildrishti-edge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: raildrishti_edge
+    ports:
+      - "8000:8000"
+    environment:
+      # Set to false and provide API keys for live deployment
+      - RAILDRISHTI_DEMO=true
+      # MSG91 SMS Gateway (for real RPF alerts)
+      - MSG91_AUTH_KEY=${MSG91_AUTH_KEY:-}
+      - MSG91_SENDER_ID=${MSG91_SENDER_ID:-RLDRAI}
+      - MSG91_TEMPLATE_ID=${MSG91_TEMPLATE_ID:-}
+      - RPF_PHONES=${RPF_PHONES:-}
+      # Twilio fallback
+      - TWILIO_SID=${TWILIO_SID:-}
+      - TWILIO_TOKEN=${TWILIO_TOKEN:-}
+      - TWILIO_FROM=${TWILIO_FROM:-}
+      # Edge device siren/PA webhook
+      - SIREN_WEBHOOK_URL=${SIREN_WEBHOOK_URL:-}
+      # KAVACH advisory (Railway Board API)
+      - KAVACH_API_URL=${KAVACH_API_URL:-}
+      - KAVACH_API_KEY=${KAVACH_API_KEY:-}
+    volumes:
+      # Persist the incident database across container restarts
+      - raildrishti_db:/app/api/railway_system.db
+      # Mount local camera device (uncomment for physical camera on Linux)
+      # - /dev/video0:/dev/video0
+    devices: []
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8000/api/system_health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  raildrishti_db:
+    driver: local
+
+# ── To scale to multiple edge nodes on different ports: ───────────────────────
+# docker-compose up --scale raildrishti-edge=3
+# Each instance would connect to a different camera via RTSP_URL env variable
