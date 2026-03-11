@@ -1,0 +1,10 @@
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                 *   C:\Users\lenovo\miniconda3
+hack4delhi               C:\Users\lenovo\miniconda3\envs\hack4delhi
+jeetojeewebsite_env      C:\Users\lenovo\miniconda3\envs\jeetojeewebsite_env
+main                     C:\Users\lenovo\miniconda3\envs\main
+
