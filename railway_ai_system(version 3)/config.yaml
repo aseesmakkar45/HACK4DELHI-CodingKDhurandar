@@ -1,0 +1,49 @@
+# RailGuard Configuration
+# =====================
+
+project:
+  name: "RailGuard"
+  version: "1.0.0"
+
+video:
+  default_path: "data/raw/videos/"
+  frame_skip: 3
+
+yolo:
+  model_path: "models/yolo_railway/weights/best.pt"
+  confidence_threshold: 0.25
+  iou_threshold: 0.45
+  input_size: 640
+  device: "cuda"
+  classes:
+    0: "crack"
+    1: "break"
+    2: "scar"
+    3: "spalling"
+    4: "normal"
+    5: "person"        
+    6: "train"         
+    7: "maintenance"   
+    8: "defect_other"  
+    9: "safe_track"
+
+features:
+  num_features: 10
+
+alerts:
+  critical_threshold: 0.75
+  warning_threshold: 0.50
+  monitor_threshold: 0.25
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  cors_origins: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175"]
+
+results:
+  output_dir: "results/"
+
+logging:
+  predictions_dir: "logs/predictions/"
+  alerts_dir: "logs/alerts/"
+  log_level: "INFO"

@@ -1,0 +1,21 @@
+# Python / Virtual Environment
+__pycache__/
+*.py[cod]
+.env
+venv/
+env/
+
+# Massive AI Models (Never upload these to Git)
+models/yolo_railway/weights/best.pt
+yolov8n-pose.pt
+*.pt
+*.pkl
+
+# AI Training Runs & Cached Images
+runs/
+data/raw/frames/
+results/
+
+# Node.js
+node_modules/
+dist/

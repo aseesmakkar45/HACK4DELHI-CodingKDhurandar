@@ -1,0 +1,19 @@
+# Deep Learning & AI
+torch
+torchvision
+ultralytics
+
+# Classical Machine Learning
+scikit-learn
+pandas
+numpy
+
+# Backend Web Server
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+
+# Computer Vision
+opencv-python
+pyyaml
