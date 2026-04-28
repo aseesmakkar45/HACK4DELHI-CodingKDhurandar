@@ -1,0 +1,165 @@
+.analysis-results {
+  width: 100%;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.card-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* Glassmorphic Risk Card overrides */
+.risk-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.risk-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background-color: var(--accent-blue);
+}
+
+.risk-card .card-header {
+  width: 100%;
+}
+
+.risk-card.critical {
+  background-color: var(--accent-red-light);
+  border-color: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.15);
+}
+.risk-card.critical::before {
+  background-color: var(--accent-red);
+}
+
+.risk-card.safe {
+  background-color: var(--accent-green-light);
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.05);
+}
+.risk-card.safe::before {
+  background-color: var(--accent-green);
+}
+
+.risk-value {
+  font-size: 3.8rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+}
+
+.critical .risk-value {
+  color: var(--accent-red);
+}
+
+.risk-label {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.critical .risk-label {
+  color: var(--accent-red);
+}
+
+/* Stats Row */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-row span {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Model Bars */
+.model-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.model-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.model-name {
+  width: 65px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.model-bar-bg {
+  flex-grow: 1;
+  height: 8px;
+  background-color: var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.model-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-md);
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(255,255,255,0.5); /* Inner glowing core */
+}
+
+.model-score {
+  width: 40px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: right;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+}
+
+.model-bar-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.model-description {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding-left: calc(65px + 1rem); /* Aligns perfectly with the start of the progress bar */
+  margin-top: 0.25rem;
+  font-style: italic;
+}

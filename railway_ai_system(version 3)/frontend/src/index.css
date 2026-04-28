@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Premium clinical Light Theme Palette */
+  --bg-primary: #f4f6f9;     
+  --bg-secondary: #ffffff;   
+  --bg-card: rgba(255, 255, 255, 0.7); 
+  --bg-hover: rgba(240, 244, 248, 0.9);
+  
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  
+  --border: rgba(203, 213, 225, 0.5);
+  --border-light: rgba(226, 232, 240, 0.7);
+  
+  /* Semantic Vibrant Colors */
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-blue-light: rgba(37, 99, 235, 0.1);
+  
+  --accent-green: #10b981;
+  --accent-green-light: rgba(16, 185, 129, 0.1);
+  
+  --accent-amber: #f59e0b;
+  --accent-amber-light: rgba(245, 158, 11, 0.1);
+  
+  --accent-red: #ef4444;
+  --accent-red-light: rgba(239, 68, 68, 0.1);
+  
+  --accent-purple: #8b5cf6;
+  
+  /* Modern Depth Shadows */
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 15px rgba(15, 23, 42, 0.04), 0 2px 6px rgba(15, 23, 42, 0.02);
+  --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.06), 0 5px 10px rgba(15, 23, 42, 0.03);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
+  
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  /* A beautiful subtle background mesh gradient for light themes */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 255, 255, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(240, 246, 255, 1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 240, 245, 0.6) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Glassmorphic Components */
+.card-glass {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.card-glass:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-md);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.btn-primary { 
+  background-color: var(--accent-blue); 
+  color: white; 
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+.btn-primary:hover:not(:disabled) { 
+  background-color: var(--accent-blue-hover); 
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+.btn-outline:hover:not(:disabled) {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Typography Utilities */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animations */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+.animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin { animation: spin-slow 1s linear infinite; }
