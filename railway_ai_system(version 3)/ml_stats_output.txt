@@ -1,0 +1,15 @@
+============================================================
+RailGuard AI - Classical ML Ensemble Trainer
+============================================================
+
+[1/3] Loading Ground Truth Statistics from data/ml_features/railguard_features.csv...
+[2/3] Dataset Vectorized: 400 training arrays, 100 validation arrays.
+
+[3/3] Training Scikit-Learn Algorithms & Serializing Architectures...
+      [KNN    ] Acc: 98.0% | Prec: 98.2% | Rec: 98.2% | F1: 98.2% -> Saved to models/ml/knn.pkl
+      [LOGREG ] Acc: 99.0% | Prec: 100.0% | Rec: 98.2% | F1: 99.1% -> Saved to models/ml/logreg.pkl
+      [DTREE  ] Acc: 99.0% | Prec: 100.0% | Rec: 98.2% | F1: 99.1% -> Saved to models/ml/dtree.pkl
+Could not generate heatmap (matplotlib/seaborn missing)
+      [RFOREST] Acc: 98.0% | Prec: 98.2% | Rec: 98.2% | F1: 98.2% -> Saved to models/ml/rforest.pkl
+
+Training Complete! Layer 2 Intelligence is ready for the Inference Pipeline.

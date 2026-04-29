@@ -1,0 +1,7 @@
+path: C:\Users\lenovo\Desktop\practice project\datasets\master_railguard
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 10
+names: ['crack', 'break', 'scar', 'spalling', 'normal', 'person', 'train', 'maintenance', 'defect_other', 'safe_track']
