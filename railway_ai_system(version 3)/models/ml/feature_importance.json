@@ -1,0 +1,42 @@
+[
+    {
+        "name": "Dominant Class",
+        "value": 46.4
+    },
+    {
+        "name": "Total Objects",
+        "value": 11.6
+    },
+    {
+        "name": "Conf StdDev",
+        "value": 11.2
+    },
+    {
+        "name": "Avg Confidence",
+        "value": 7.0
+    },
+    {
+        "name": "Avg Area",
+        "value": 5.7
+    },
+    {
+        "name": "Max Confidence",
+        "value": 5.4
+    },
+    {
+        "name": "Max Area",
+        "value": 4.6
+    },
+    {
+        "name": "Center Proximity",
+        "value": 4.1
+    },
+    {
+        "name": "Anomaly Ratio",
+        "value": 3.6
+    },
+    {
+        "name": "High Conf Anomalies",
+        "value": 0.5
+    }
+]
